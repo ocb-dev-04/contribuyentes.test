@@ -1,0 +1,14 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net9.0</TargetFramework>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>enable</Nullable>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\Module.Internal.Error.Logs.Domain\Module.Internal.Error.Logs.Domain.csproj" />
+    <ProjectReference Include="..\Module.Internal.Error.Logs.Persistence\Module.Internal.Error.Logs.Persistence.csproj" />
+  </ItemGroup>
+
+</Project>

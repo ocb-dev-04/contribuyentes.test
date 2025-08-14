@@ -1,0 +1,14 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net9.0</TargetFramework>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>enable</Nullable>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\..\..\common\Common.Sources\Common.Sources.csproj" />
+    <ProjectReference Include="..\Module.Contribuyente.Perfiles.Domain\Module.Contribuyente.Perfiles.Domain.csproj" />
+  </ItemGroup>
+
+</Project>

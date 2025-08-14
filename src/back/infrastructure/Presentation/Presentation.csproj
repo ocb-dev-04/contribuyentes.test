@@ -1,0 +1,15 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net9.0</TargetFramework>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>enable</Nullable>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\..\modules\comprobante.registros\Modulo.Comprobante.Registros.Features\Modulo.Comprobante.Registros.Features.csproj" />
+    <ProjectReference Include="..\..\modules\contribuyente.perfiles\Module.Contribuyente.Perfiles.Features\Module.Contribuyente.Perfiles.Features.csproj" />
+    <ProjectReference Include="..\..\modules\internal.error_logs\Module.Internal.Error.Logs.Features\Module.Internal.Error.Logs.Features.csproj" />
+  </ItemGroup>
+
+</Project>

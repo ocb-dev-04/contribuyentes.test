@@ -1,0 +1,15 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net9.0</TargetFramework>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>enable</Nullable>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\..\..\common\Global.Sources\Global.Sources.csproj" />
+    <ProjectReference Include="..\Module.Contribuyente.Perfiles.Domain\Module.Contribuyente.Perfiles.Domain.csproj" />
+    <ProjectReference Include="..\Module.Contribuyente.Perfiles.Persistence\Module.Contribuyente.Perfiles.Persistence.csproj" />
+  </ItemGroup>
+
+</Project>

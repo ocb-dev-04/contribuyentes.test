@@ -1,0 +1,18 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net9.0</TargetFramework>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>enable</Nullable>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Bogus" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\..\modules\comprobante.registros\Modulo.Comprobante.Registros.Domain\Modulo.Comprobante.Registros.Domain.csproj" />
+    <ProjectReference Include="..\..\modules\contribuyente.perfiles\Module.Contribuyente.Perfiles.Domain\Module.Contribuyente.Perfiles.Domain.csproj" />
+  </ItemGroup>
+
+</Project>
