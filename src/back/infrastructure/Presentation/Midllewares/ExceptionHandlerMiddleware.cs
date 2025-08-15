@@ -1,9 +1,15 @@
-﻿using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Http;
+﻿using Global.Sources.Events.Internal;
 using Global.Sources.Exceptions;
-using Microsoft.Extensions.Logging;
+using Global.Sources.ValueObjects.Values;
+using MediatR;
+using Microsoft.AspNetCore.Authentication;
+using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Controllers;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Logging;
+using System.Text.Json;
 
 namespace Presentation.Midllewares;
 
@@ -76,18 +82,34 @@ public sealed class ExceptionHandlerMiddleware
         _logger.LogError($"--> Some error ocurred: {0}", ex.InnerException);
 
         IServiceScope scope = context.RequestServices.CreateScope();
-        //HttpRequestProvider? httpRequestProvider = scope.ServiceProvider.GetService<HttpRequestProvider>();
-        //IErrorLogRepository? errorLogRepository = scope.ServiceProvider.GetService<IErrorLogRepository>();
+        IMediator mediator = scope.ServiceProvider.GetRequiredService<IMediator>();
 
-        //ArgumentNullException.ThrowIfNull(httpRequestProvider, nameof(httpRequestProvider));
-        //ArgumentNullException.ThrowIfNull(errorLogRepository, nameof(errorLogRepository));
+        string ipAddress = context.Connection.RemoteIpAddress?.ToString() ?? "Unknown";
 
-        //Result<ErrorLog> error = ErrorLog.Create(
-        //    ex.Message,
-        //    ex.StackTrace ?? string.Empty,
-        //    in httpRequestProvider);
+        string path = context.Request.Path.HasValue
+            ? context.Request.Path.Value
+            : string.Empty;
 
-        //await errorLogRepository.CreateAsync(error.Value, context.RequestAborted);
+        string method = context.Request.Method;
+
+        Endpoint? endpoint = context.GetEndpoint();
+        ControllerActionDescriptor? actionDescriptor = endpoint?.Metadata
+            .GetMetadata<ControllerActionDescriptor>();
+
+        string controllerName = actionDescriptor?.ControllerName ?? string.Empty;
+        string actionName = actionDescriptor?.ActionName ?? string.Empty;
+
+        CreateErrorLogInternalEvent errorEvent = new(
+            StringObject.Create(ipAddress),
+            StringObject.Create(path),
+            StringObject.Create(controllerName),
+            StringObject.Create(actionName),
+            StringObject.Create(method),
+            StringObject.Create(ex.InnerException is null ? string.Empty : ex.InnerException.ToString()),
+            StringObject.Create(JsonSerializer.Serialize(ex.StackTrace)),
+            DateTimeOffset.UtcNow);
+
+        await mediator.Publish(errorEvent, context.RequestAborted);
 
         context.Response.StatusCode = 500;
         await context.Response.WriteAsync(string.Empty);
